@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--多对一获取数据-->
+<mapper namespace="com.wjf.demo.dao.DepartMapper">
+
+    <resultMap id="result1" type="com.wjf.demo.entity.User">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <!--对象参数配置-->
+        <association property="userInfo" javaType="com.wjf.demo.entity.UserInfo" column="s_id">
+            <id column="s_id" jdbcType="INTEGER" property="id"></id>
+            <result column="age" jdbcType="INTEGER" property="age"></result>
+            <result column="pwd" jdbcType="VARCHAR" property="pwd"></result>
+            <result column="sex" jdbcType="VARCHAR" property="sex"></result>
+            <result column="phone" jdbcType="CHAR" property="phone"></result>
+            <result column="address" jdbcType="VARCHAR" property="address"></result>
+            <result column="wx" jdbcType="CHAR" property="wx"></result>
+            <result column="qq" jdbcType="CHAR" property="qq"></result>
+        </association>
+    </resultMap>
+
+    <resultMap id="result" type="com.wjf.demo.entity.Depart">
+        <result property="id" jdbcType="INTEGER" column="id"></result>
+        <result property="dname" jdbcType="VARCHAR" column="dname"></result>
+        <association property="user" javaType="com.wjf.demo.entity.User" resultMap="result1">
+        </association>
+    </resultMap>
+
+    <select id="getDepart" resultMap="result">
+        select *
+        from user
+                 inner join depart on user.id = depart.u_id and user.id = #{id}
+                 inner join user_info on user.s_id = user_info.id
+    </select>
+</mapper>

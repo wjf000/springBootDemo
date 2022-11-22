@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--一对一、一对多获取数据-->
+<mapper namespace="com.wjf.demo.dao.UserMapper">
+    <resultMap id="result" type="com.wjf.demo.entity.User">
+        <result column="id" jdbcType="INTEGER" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <!--对象参数配置-->
+        <association property="userInfo" javaType="com.wjf.demo.entity.UserInfo" column="s_id">
+            <id column="s_id" jdbcType="INTEGER" property="id"></id>
+            <result column="age" jdbcType="INTEGER" property="age"></result>
+            <result column="pwd" jdbcType="VARCHAR" property="pwd"></result>
+            <result column="sex" jdbcType="VARCHAR" property="sex"></result>
+            <result column="phone" jdbcType="CHAR" property="phone"></result>
+            <result column="address" jdbcType="VARCHAR" property="address"></result>
+            <result column="wx" jdbcType="CHAR" property="wx"></result>
+            <result column="qq" jdbcType="CHAR" property="qq"></result>
+        </association>
+        <!--列表参数配置-->
+        <collection property="departs" ofType="com.wjf.demo.entity.Depart" column="u_id">
+            <id column="u_id" jdbcType="INTEGER" property="id"></id>
+            <result column="dname" jdbcType="VARCHAR" property="dname"></result>
+        </collection>
+    </resultMap>
+
+    <select id="findAllUser" resultType="com.wjf.demo.entity.User">
+        select *
+        from user;
+    </select>
+
+    <select id="findUserByUserId" resultType="com.wjf.demo.entity.User">
+        select *
+        from user
+        where id = #{id};
+    </select>
+    <select id="findUserByUserName" resultType="com.wjf.demo.entity.User">
+        select *
+        from user
+        where name = #{username};
+    </select>
+
+    <insert id="insertUser">
+        insert into user(id, name)
+        values (#{id}, #{name});
+    </insert>
+
+    <update id="updateUser">
+        update user
+        set name=#{name}
+        where id = #{id};
+    </update>
+
+    <delete id="deleteUser">
+        delete
+        from user
+        where id = #{id};
+    </delete>
+
+    <select id="findAllUsers" resultMap="result">
+        select *
+        from user
+                 inner join user_info on user.s_id = user_info.id
+                 inner join depart on user.id = depart.u_id;
+    </select>
+</mapper>
