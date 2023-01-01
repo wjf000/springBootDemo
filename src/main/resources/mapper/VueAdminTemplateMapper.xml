@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wjf.demo.dao.UserInfoMapper">
+    <resultMap id="result" type="com.wjf.demo.entity.UserInfo">
+        <result property="id" column="id" jdbcType="INTEGER"></result>
+        <result property="name" column="name" jdbcType="VARCHAR"></result>
+        <result property="sex" column="sex" jdbcType="VARCHAR"></result>
+        <result property="age" column="age" jdbcType="INTEGER"></result>
+        <result property="phone" column="phone" jdbcType="CHAR"></result>
+        <result property="address" column="address" jdbcType="VARCHAR"></result>
+        <result property="email" column="email" jdbcType="VARCHAR"></result>
+    </resultMap>
+    <insert id="insertInfo">
+        insert into student(name, sex, age, phone, address, email)
+        VALUES (#{name}, #{sex}, #{age}, #{phone}, #{address}, #{email});
+    </insert>
+    <update id="updateInfo">
+        update student
+        set name    = #{name},
+            sex     = #{sex},
+            age     = #{age},
+            phone   = #{phone},
+            address = #{address},
+            email   = #{email}
+        WHERE id =#{id};
+    </update>
+    <delete id="deleteInfo">
+        delete
+        from student
+        where id = #{id};
+    </delete>
+    <select id="findInfoList" resultMap="result">
+        select *
+        from student;
+    </select>
+</mapper>
