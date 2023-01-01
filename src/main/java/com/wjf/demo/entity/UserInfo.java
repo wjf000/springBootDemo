@@ -9,14 +9,13 @@ import javax.persistence.Table;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "user_info")
+@Table(name = "student")
 public class UserInfo {
     int id;
-    int age;
-    String pwd;
+    String name;
     String sex;
+    int age;
     String phone;
     String address;
-    String wx;
-    String qq;
+    String email;
 }

@@ -7,11 +7,12 @@ import com.wjf.demo.service.DepartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @Service
 public class DepartServiceImpl implements DepartService {
-    @Autowired
+    @Resource
     DepartMapper departMapper;
 
     @Override
